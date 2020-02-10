@@ -1,0 +1,6 @@
+a / b / 5
+b / c / 4
+a / d / 7
+
+Hospital Node: a
+Airport Node: o
