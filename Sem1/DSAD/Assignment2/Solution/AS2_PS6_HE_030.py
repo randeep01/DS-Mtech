@@ -92,15 +92,15 @@ class Heap():
   
         # Travel up while the complete tree is  
         # not hepified. This is a O(Logn) loop 
-        while i > 0 and self.array[i][1] < self.array[(i - 1) / 2][1]: 
+        while i > 0 and self.array[i][1] < self.array[(i - 1) // 2][1]: 
   
             # Swap this node with its parent 
             self.pos[ self.array[i][0] ] = (i-1)/2
-            self.pos[ self.array[(i-1)/2][0] ] = i 
-            self.swapMinHeapNode(i, (i - 1)/2 ) 
+            self.pos[ self.array[(i-1)//2][0] ] = i 
+            self.swapMinHeapNode(i, (i - 1)//2 ) 
   
             # move to parent index 
-            i = (i - 1) / 2; 
+            i = (i - 1) // 2; 
   
     # A utility function to check if a given  
     # vertex 'v' is in min heap or not 
@@ -154,7 +154,7 @@ class Graph():
         #  Initialize min heap with all vertices.  
         # dist value of all vertices 
         for v in range(V): 
-            dist.append(sys.maxint) 
+            dist.append(sys.maxsize) 
             minHeap.array.append( minHeap.newMinHeapNode(v, dist[v]) ) 
             minHeap.pos.append(v) 
   
@@ -185,7 +185,7 @@ class Graph():
                 # If shortest distance to v is not finalized  
                 # yet, and distance to v through u is less  
                 # than its previously calculated distance 
-                if minHeap.isInMinHeap(v) and dist[u] != sys.maxint and pCrawl[1] + dist[u] < dist[v]: 
+                if minHeap.isInMinHeap(v) and dist[u] != sys.maxsize and pCrawl[1] + dist[u] < dist[v]: 
                         dist[v] = pCrawl[1] + dist[u] 
   
                         # update distance value  
@@ -195,17 +195,19 @@ class Graph():
         printArr(dist,V) 
   
 
-def getNumNodes(fileText):
+def preProcessInputFile(fileText):
     nodeTraversalList = []
     for line in fileText:
+        line = line.replace("\n","")
         if "/" in line:
 #           Process line as a node
-            line.replace(" ","")
+            line = line.replace(" ","")
             nodeDistSplit = line.split("/")
             print(nodeDistSplit)
-            nodeTraversalList.append(nodeDistSplit[0],nodeDistSplit[1])
+            nodeTraversalList = nodeTraversalList + [nodeDistSplit[0],nodeDistSplit[1]]
         else:
             print(line)
+    print(set(nodeTraversalList))
     return len(set(nodeTraversalList))
 
 # Driver program to test the above functions 
@@ -217,7 +219,7 @@ def main():
         fileText = inpf.readlines()
     print(getNumNodes(fileText))
                 
-    graph = Graph(9) 
+    graph = Graph(getNumNodes(fileText)) 
     graph.addEdge(0, 1, 4) 
     graph.addEdge(0, 7, 8) 
     graph.addEdge(1, 2, 8) 
