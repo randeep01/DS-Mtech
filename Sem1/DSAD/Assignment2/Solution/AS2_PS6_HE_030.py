@@ -217,9 +217,9 @@ def main():
 #    outputFile = 'outputPS6.txt'
     with open(parentFolderPath+inputFileName, 'r') as inpf:
         fileText = inpf.readlines()
-    print(getNumNodes(fileText))
+    print(preProcessInputFile(fileText))
                 
-    graph = Graph(getNumNodes(fileText)) 
+    graph = Graph(preProcessInputFile(fileText)) 
     graph.addEdge(0, 1, 4) 
     graph.addEdge(0, 7, 8) 
     graph.addEdge(1, 2, 8) 
