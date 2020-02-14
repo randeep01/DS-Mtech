@@ -6,7 +6,45 @@ Created on Mon Feb 10 21:18:00 2020
 """
 from collections import defaultdict 
 import sys 
-  
+class Route:
+    def __init__(self,start,end,dist):
+        self.start = start
+        self.end = end
+        self.dist = dist
+        
+    def __str__(self):
+        return self.start + " " + self.end + " " +str( self.dist )   
+        
+class City():
+
+    def __init__(self,fileText):
+        self.nodes = []
+        self.count = 0
+        self.src = ''
+        self.dest = ''
+        self.routes = []
+        for line in fileText:
+            line = line.replace("\n","")
+            print(line)
+            if "/" in line:
+    #           Process line as a node
+                line = line.replace(" ","")
+                nodeDistSplit = line.split("/")
+               #      print(nodeDistSplit)
+                self.nodes = self.nodes + [nodeDistSplit[0],nodeDistSplit[1]]
+               
+                route = Route(nodeDistSplit[0],nodeDistSplit[1],nodeDistSplit[2])
+               # print('$'+ str( route))
+                self.routes = self.routes + [route]
+                
+            elif "Airport" in line:
+                strSplit =  line.split(":")
+                self.dest = strSplit[1]
+            elif "Hospital" in line:
+                strSplit = line.split(":")
+                self.src = strSplit[1]
+        self.count =  len(set(self.nodes))
+        
 class Heap(): 
   
     def __init__(self): 
@@ -208,7 +246,8 @@ def preProcessInputFile(fileText):
         else:
             print(line)
     print(set(nodeTraversalList))
-    return len(set(nodeTraversalList))
+    return len(set(nodeTraversalList)),set(nodeTraversalList)
+
 
 # Driver program to test the above functions 
 def main():
@@ -217,24 +256,21 @@ def main():
 #    outputFile = 'outputPS6.txt'
     with open(parentFolderPath+inputFileName, 'r') as inpf:
         fileText = inpf.readlines()
-    print(getNumNodes(fileText))
-                
-    graph = Graph(getNumNodes(fileText)) 
-    graph.addEdge(0, 1, 4) 
-    graph.addEdge(0, 7, 8) 
-    graph.addEdge(1, 2, 8) 
-    graph.addEdge(1, 7, 11) 
-    graph.addEdge(2, 3, 7) 
-    graph.addEdge(2, 8, 2) 
-    graph.addEdge(2, 5, 4) 
-    graph.addEdge(3, 4, 9) 
-    graph.addEdge(3, 5, 14) 
-    graph.addEdge(4, 5, 10) 
-    graph.addEdge(5, 6, 2) 
-    graph.addEdge(6, 7, 1) 
-    graph.addEdge(6, 8, 6) 
-    graph.addEdge(7, 8, 7) 
-    graph.dijkstra(0)
+#    print(preProcessInputFile(fileText))
+    #a,b =    preProcessInputFile(fileText)
+    city = City(fileText)
+    print(city.src)
+    print(city.dest)
+    print(city.nodes)
+    print(city.count)
+    print(city.routes)
+
+
+
+    graph = Graph(city.count) 
+    for x in range(city.count): 
+        graph.addEdge(ord(city.routes[x].start.strip()) - ord('a'),ord(city.routes[x].end.strip()) - ord('a') , city.routes[x].dist)
+    graph.dijkstra(ord(city.src.strip()) - ord('a')) 
 
 if __name__=="__main__":
     main()
