@@ -1,50 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Feb 10 21:18:00 2020
+Created on Fri Feb 14 22:13:16 2020
 
-@author: Group 030
+@author: sidus
 """
+
+# A Python program for Dijkstra's shortest  
+# path algorithm for adjacency 
+# list representation of graph 
+  
 from collections import defaultdict 
 import sys 
-class Route:
-    def __init__(self,start,end,dist):
-        self.start = start
-        self.end = end
-        self.dist = dist
-        
-    def __str__(self):
-        return self.start + " " + self.end + " " +str( self.dist )   
-        
-class City():
-
-    def __init__(self,fileText):
-        self.nodes = []
-        self.count = 0
-        self.src = ''
-        self.dest = ''
-        self.routes = []
-        for line in fileText:
-            line = line.replace("\n","")
-            print(line)
-            if "/" in line:
-    #           Process line as a node
-                line = line.replace(" ","")
-                nodeDistSplit = line.split("/")
-               #      print(nodeDistSplit)
-                self.nodes = self.nodes + [nodeDistSplit[0],nodeDistSplit[1]]
-               
-                route = Route(nodeDistSplit[0],nodeDistSplit[1],nodeDistSplit[2])
-               # print('$'+ str( route))
-                self.routes = self.routes + [route]
-                
-            elif "Airport" in line:
-                strSplit =  line.split(":")
-                self.dest = strSplit[1]
-            elif "Hospital" in line:
-                strSplit = line.split(":")
-                self.src = strSplit[1]
-        self.count =  len(set(self.nodes))
-        
+  
 class Heap(): 
   
     def __init__(self): 
@@ -71,11 +38,13 @@ class Heap():
         smallest = idx 
         left = 2*idx + 1
         right = 2*idx + 2
-        
-        if left < self.size and self.array[left][1]  < self.array[smallest][1]: 
+  
+        if left < self.size and self.array[left][1] \ 
+                                < self.array[smallest][1]: 
             smallest = left 
   
-        if right < self.size and self.array[right][1] < self.array[smallest][1]: 
+        if right < self.size and self.array[right][1]\ 
+                                < self.array[smallest][1]: 
             smallest = right 
   
         # The nodes to be swapped in min  
@@ -130,15 +99,15 @@ class Heap():
   
         # Travel up while the complete tree is  
         # not hepified. This is a O(Logn) loop 
-        while i > 0 and self.array[i][1] < self.array[(i - 1) // 2][1]: 
+        while i > 0 and self.array[i][1] < self.array[(i - 1) / 2][1]: 
   
             # Swap this node with its parent 
             self.pos[ self.array[i][0] ] = (i-1)/2
-            self.pos[ self.array[(i-1)//2][0] ] = i 
-            self.swapMinHeapNode(i, (i - 1)//2 ) 
+            self.pos[ self.array[(i-1)/2][0] ] = i 
+            self.swapMinHeapNode(i, (i - 1)/2 ) 
   
             # move to parent index 
-            i = (i - 1) // 2; 
+            i = (i - 1) / 2; 
   
     # A utility function to check if a given  
     # vertex 'v' is in min heap or not 
@@ -150,9 +119,9 @@ class Heap():
   
   
 def printArr(dist, n): 
-    print("Vertex\tDistance from source")
+    print "Vertex\tDistance from source"
     for i in range(n): 
-        print("%d\t\t%d" % (i,dist[i]))
+        print "%d\t\t%d" % (i,dist[i]) 
   
   
 class Graph(): 
@@ -192,7 +161,7 @@ class Graph():
         #  Initialize min heap with all vertices.  
         # dist value of all vertices 
         for v in range(V): 
-            dist.append(sys.maxsize) 
+            dist.append(sys.maxint) 
             minHeap.array.append( minHeap.newMinHeapNode(v, dist[v]) ) 
             minHeap.pos.append(v) 
   
@@ -223,7 +192,8 @@ class Graph():
                 # If shortest distance to v is not finalized  
                 # yet, and distance to v through u is less  
                 # than its previously calculated distance 
-                if minHeap.isInMinHeap(v) and dist[u] != sys.maxsize and pCrawl[1] + dist[u] < dist[v]: 
+                if minHeap.isInMinHeap(v) and dist[u] != sys.maxint and \ 
+                   pCrawl[1] + dist[u] < dist[v]: 
                         dist[v] = pCrawl[1] + dist[u] 
   
                         # update distance value  
@@ -232,63 +202,22 @@ class Graph():
   
         printArr(dist,V) 
   
-
-#def preProcessInputFile(fileText):
-#    nodeTraversalList = []
-#    for line in fileText:
-#        line = line.replace("\n","")
-#        if "/" in line:
-##           Process line as a node
-#            line = line.replace(" ","")
-#            nodeDistSplit = line.split("/")
-#            print(nodeDistSplit)
-#            nodeTraversalList = nodeTraversalList + [nodeDistSplit[0],nodeDistSplit[1]]
-#        else:
-#            print(line)
-#    print(set(nodeTraversalList))
-#    return len(set(nodeTraversalList)),set(nodeTraversalList)
-
-
+  
 # Driver program to test the above functions 
-def main():
-    parentFolderPath = ''
-    inputFileName = 'inputPS6.txt'
-#    outputFile = 'outputPS6.txt'
-    with open(parentFolderPath+inputFileName, 'r') as inpf:
-        fileText = inpf.readlines()
-#    print(preProcessInputFile(fileText))
-                
-#    graph = Graph(preProcessInputFile(fileText)) 
-#    graph.addEdge(0, 1, 4) 
-#    graph.addEdge(0, 7, 8) 
-#    graph.addEdge(1, 2, 8) 
-#    graph.addEdge(1, 7, 11) 
-#    graph.addEdge(2, 3, 7) 
-#    graph.addEdge(2, 8, 2) 
-#    graph.addEdge(2, 5, 4) 
-#    graph.addEdge(3, 4, 9) 
-#    graph.addEdge(3, 5, 14) 
-#    graph.addEdge(4, 5, 10) 
-#    graph.addEdge(5, 6, 2) 
-#    graph.addEdge(6, 7, 1) 
-#    graph.addEdge(6, 8, 6) 
-#    graph.addEdge(7, 8, 7) 
-#    graph.dijkstra(0)
-#    print(preProcessInputFile(fileText))
-    #a,b =    preProcessInputFile(fileText)
-    city = City(fileText)
-    print(city.src)
-    print(city.dest)
-    print(city.nodes)
-    print(city.count)
-    print(city.routes)
-
-    graph = Graph(city.count) 
-    for x in range(city.count): 
-        graph.addEdge(ord(city.routes[x].start.strip()) - ord('a'),ord(city.routes[x].end.strip()) - ord('a') , city.routes[x].dist)
-    graph.dijkstra(ord(city.src.strip()) - ord('a')) 
-
-
-if __name__=="__main__":
-    main()
-
+graph = Graph(9) 
+graph.addEdge(0, 1, 4) 
+graph.addEdge(0, 7, 8) 
+graph.addEdge(1, 2, 8) 
+graph.addEdge(1, 7, 11) 
+graph.addEdge(2, 3, 7) 
+graph.addEdge(2, 8, 2) 
+graph.addEdge(2, 5, 4) 
+graph.addEdge(3, 4, 9) 
+graph.addEdge(3, 5, 14) 
+graph.addEdge(4, 5, 10) 
+graph.addEdge(5, 6, 2) 
+graph.addEdge(6, 7, 1) 
+graph.addEdge(6, 8, 6) 
+graph.addEdge(7, 8, 7) 
+graph.dijkstra(0) 
+  
