@@ -263,6 +263,7 @@ def main():
     g = Graph(nodeList)
     for route in routeList:
         print(route)
+        print(route.src)
         g.connect(route.src, route.des, route.dist)
 
     temp = ([(weight, [n.data for n in node]) for (weight, node) in g.dijkstra(source)])
