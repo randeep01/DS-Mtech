@@ -16,8 +16,8 @@ def main():
     city = City(fileText)
     for city in city.nodes:
         print(city)
-        exec(var + " = '"+Node(city)+"'")
-        print(var)
+        exec(city + " = '"+Node(city+"'")
+        print(city)
     # graph = Graph(city.count) 
     # print("count "+ str(city.count))
     # for x in range(len(city.routes)): 

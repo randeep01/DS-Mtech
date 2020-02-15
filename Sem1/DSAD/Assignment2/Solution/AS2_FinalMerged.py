@@ -11,7 +11,7 @@ class Route:
         self.dist = dist
         
     def __str__(self):
-        return self.src + " " + self.des + " " +str( self.dist )   
+        return self.src.data + " " + self.des.data + " " +str(self.dist )   
 
 class Node:  
     def __init__(self, data, indexloc = None):
@@ -152,7 +152,6 @@ class Graph:
         for i in range(len(nodes)):
             nodes[i].index = i
 
-
     def connect_dir(self, node1, node2, weight = 1):
         node1, node2 = self.get_index_from_node(node1), self.get_index_from_node(node2)
         # Note that the below doesn't protect from adding a connection twice
@@ -219,41 +218,66 @@ class Graph:
                         heap.decrease_key(heap_location, data)
 
         return min_dist_list
-    
+
+def get_node_from_data(nodeList, data):
+    for node in nodeList:
+        if node.data == data:
+            return node
+    return None
+
 def main():
     parentFolderPath = ''
     inputFileName = 'inputPS6.txt'
 #    outputFile = 'outputPS6.txt'
     with open(parentFolderPath+inputFileName, 'r') as inpf:
         fileText = inpf.readlines()
-              
     nodeList = []
     routeList = []
     for line in fileText:
         line = line.replace("\n","")
         line = line.replace(" ","")
+        print(line,",")
         if "/" in line:
 #           Process line as a node
             nodeDistSplit = line.split("/")
             # Creating list of city nodes
+            print('src:',nodeDistSplit[0], end=',')
+            print('des:',nodeDistSplit[1])
             srcNode = Node(nodeDistSplit[0])
-            if srcNode not in nodeList:
+            if not get_node_from_data(nodeList, nodeDistSplit[0]):
                 nodeList.append(srcNode)
             desNode = Node(nodeDistSplit[1])
-            if desNode not in nodeList:
+            if not get_node_from_data(nodeList, nodeDistSplit[1]):
                 nodeList.append(desNode)
-            routeList.append(Route(srcNode, desNode, nodeDistSplit[2]))
+            print(int(nodeDistSplit[2]))
+            routeList.append(Route(srcNode, desNode, int(nodeDistSplit[2])))
         elif "Airport" in line:
             strSplit =  line.split(":")
-            self.dest = strSplit[1]
+            print('Airport:', strSplit[1], '-')
+            destination = get_node_from_data(nodeList, strSplit[1])
         elif "Hospital" in line:
             strSplit = line.split(":")
-            self.src = strSplit[1]
+            print('Hospital:', strSplit[1], '-')
+            source = get_node_from_data(nodeList, strSplit[1])
     
     g = Graph(nodeList)
     for route in routeList:
+        print(route)
         g.connect(route.src, route.des, route.dist)
 
+    temp = ([(weight, [n.data for n in node]) for (weight, node) in g.dijkstra(source)])
+    for i in range(len(temp)):
+        if temp[i][1][0]==source and temp[i][1][-1]==destination:
+            route = temp[i][1]
+            minDist = temp[i][0]
+            time = (minDist/80)*60
+            break
+    minutes = int(time)
+    seconds = int((time - minutes)*60)
+    path = str([node for node in route])
+    print("Shortest route from the hospital "+source+" to reach airport "+destination+" is " + path) 
+    print("and it has minimum travel distance "+str(minDist))
+    print("it will take ",str(minutes)+":"+str(seconds)," minutes for the ambulance to reach the airport.")
 
 if __name__=="__main__":
     main()
