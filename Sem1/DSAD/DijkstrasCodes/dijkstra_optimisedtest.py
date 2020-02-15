@@ -13,7 +13,7 @@ e = Node('e')
 f = Node('f')
 
 g = Graph([a,b,c,d,e,f])
-
+    
 g.connect(a,b,5)
 g.connect(a,c,10)
 g.connect(a,e,2)
