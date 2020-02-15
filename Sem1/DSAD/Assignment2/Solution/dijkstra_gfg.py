@@ -201,9 +201,7 @@ class Graph():
   
   
 # Driver program to test the above functions 
-graph = Graph(15) 
-
-
+graph = Graph(15)
 graph.addEdge(0, 1, 5) # a / b / 5
 graph.addEdge(1, 2, 4) # b / c / 4 
 graph.addEdge(0, 3, 7) # a / d / 7
