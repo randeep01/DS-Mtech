@@ -236,47 +236,41 @@ def main():
     for line in fileText:
         line = line.replace("\n","")
         line = line.replace(" ","")
-        print(line,",")
         if "/" in line:
 #           Process line as a node
             nodeDistSplit = line.split("/")
             # Creating list of city nodes
-            print('src:',nodeDistSplit[0], end=',')
-            print('des:',nodeDistSplit[1])
-            srcNode = Node(nodeDistSplit[0])
-            if not get_node_from_data(nodeList, nodeDistSplit[0]):
+            srcNode = get_node_from_data(nodeList, nodeDistSplit[0])
+            if not srcNode:
+                srcNode = Node(nodeDistSplit[0])
                 nodeList.append(srcNode)
-            desNode = Node(nodeDistSplit[1])
-            if not get_node_from_data(nodeList, nodeDistSplit[1]):
+            desNode = get_node_from_data(nodeList, nodeDistSplit[1])
+            if not desNode:
+                desNode = Node(nodeDistSplit[1])
                 nodeList.append(desNode)
-            print(int(nodeDistSplit[2]))
             routeList.append(Route(srcNode, desNode, int(nodeDistSplit[2])))
         elif "Airport" in line:
             strSplit =  line.split(":")
-            print('Airport:', strSplit[1], '-')
             destination = get_node_from_data(nodeList, strSplit[1])
         elif "Hospital" in line:
             strSplit = line.split(":")
-            print('Hospital:', strSplit[1], '-')
             source = get_node_from_data(nodeList, strSplit[1])
     
     g = Graph(nodeList)
     for route in routeList:
-        print(route)
-        print(route.src)
         g.connect(route.src, route.des, route.dist)
 
     temp = ([(weight, [n.data for n in node]) for (weight, node) in g.dijkstra(source)])
     for i in range(len(temp)):
-        if temp[i][1][0]==source and temp[i][1][-1]==destination:
-            route = temp[i][1]
+        if temp[i][1][0]==source.data and temp[i][1][-1]==destination.data:
+            desired_route = temp[i][1]
             minDist = temp[i][0]
             time = (minDist/80)*60
             break
     minutes = int(time)
     seconds = int((time - minutes)*60)
-    path = str([node for node in route])
-    print("Shortest route from the hospital "+source+" to reach airport "+destination+" is " + path) 
+    path = str([node for node in desired_route])
+    print("Shortest route from the hospital "+source.data +" to reach airport "+destination.data +" is " + path) 
     print("and it has minimum travel distance "+str(minDist))
     print("it will take ",str(minutes)+":"+str(seconds)," minutes for the ambulance to reach the airport.")
 
