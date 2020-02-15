@@ -201,20 +201,42 @@ class Graph():
   
   
 # Driver program to test the above functions 
-graph = Graph(9) 
-graph.addEdge(0, 1, 4) 
-graph.addEdge(0, 7, 8) 
-graph.addEdge(1, 2, 8) 
-graph.addEdge(1, 7, 11) 
-graph.addEdge(2, 3, 7) 
-graph.addEdge(2, 8, 2) 
-graph.addEdge(2, 5, 4) 
-graph.addEdge(3, 4, 9) 
-graph.addEdge(3, 5, 14) 
-graph.addEdge(4, 5, 10) 
-graph.addEdge(5, 6, 2) 
-graph.addEdge(6, 7, 1) 
-graph.addEdge(6, 8, 6) 
-graph.addEdge(7, 8, 7) 
+graph = Graph(15) 
+
+
+graph.addEdge(0, 1, 5) # a / b / 5
+graph.addEdge(1, 2, 4) # b / c / 4 
+graph.addEdge(0, 3, 7) # a / d / 7
+graph.addEdge(1, 4, 3) # b / e / 3
+graph.addEdge(4, 8, 4) # e / i / 4
+graph.addEdge(3, 5, 2) # d / f / 2
+graph.addEdge(3, 6, 8) # d / g / 8
+graph.addEdge(6, 7, 6) # g / h / 6
+graph.addEdge(7, 11, 2)# h / l / 2  
+graph.addEdge(11, 13, 3)# l / n / 3  
+graph.addEdge(13, 14, 6) #n / o / 6
+graph.addEdge(2, 9, 6) #c / j / 6
+graph.addEdge(2, 8, 6) #c / i / 6
+graph.addEdge(5, 8, 5) #f /i / 5
+graph.addEdge(6, 7, 6) #g / h / 6
+graph.addEdge(8, 10, 7) #i / k / 7
+graph.addEdge(9, 10, 2) #j / k / 2
+graph.addEdge(10, 12, 2) #k / m / 2
+graph.addEdge(12, 14, 4) #m / o / 4
+graph.addEdge(10, 14, 8) #k / o / 8
+# graph.addEdge(0, 1, 4) 
+# graph.addEdge(0, 7, 8) 
+# graph.addEdge(1, 2, 8) 
+# graph.addEdge(1, 7, 11) 
+# graph.addEdge(2, 3, 7) 
+# graph.addEdge(2, 8, 2) 
+# graph.addEdge(2, 5, 4) 
+# graph.addEdge(3, 4, 9) 
+# graph.addEdge(3, 5, 14) 
+# graph.addEdge(4, 5, 10) 
+# graph.addEdge(5, 6, 2) 
+# graph.addEdge(6, 7, 1) 
+# graph.addEdge(6, 8, 6) 
+# graph.addEdge(7, 8, 7) 
 graph.dijkstra(0) 
   
