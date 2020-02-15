@@ -5,43 +5,41 @@ Created on Sat Feb 15 21:20:26 2020
 @author: sidus
 """
 class Route:
-    def __init__(self,start,end,dist):
-        self.start = start
-        self.end = end
+    def __init__(self,src,des,dist):
+        self.src = src
+        self.des = des
         self.dist = dist
         
     def __str__(self):
-        return self.start + " " + self.end + " " +str( self.dist )   
-    
-class City():
+        return self.src + " " + self.des + " " +str( self.dist )   
+# class City():
 
-    def __init__(self, fileText):
-        self.nodes = []
-        self.count = 0
-        self.src = ''
-        self.dest = ''
-        self.routes = []
-        for line in fileText:
-            line = line.replace("\n","")
-            print(line)
-            if "/" in line:
-    #           Process line as a node
-                line = line.replace(" ","")
-                nodeDistSplit = line.split("/")
-               #      print(nodeDistSplit)
-                self.nodes = self.nodes + [nodeDistSplit[0],nodeDistSplit[1]]
-               
-                route = Route(nodeDistSplit[0],nodeDistSplit[1],nodeDistSplit[2])
-               # print('$'+ str( route))
-                self.routes = self.routes + [route]
-                
-            elif "Airport" in line:
-                strSplit =  line.split(":")
-                self.dest = strSplit[1]
-            elif "Hospital" in line:
-                strSplit = line.split(":")
-                self.src = strSplit[1]
-        self.count =  len(set(self.nodes))
+#     def __init__(self, fileText):
+#         self.nodes = []
+#         self.count = 0
+#         self.src = ''
+#         self.dest = ''
+#         self.routes = []
+#         for line in fileText:
+#             line = line.replace("\n","")
+#             line = line.replace(" ","")
+#             if "/" in line:
+#     #           Process line as a node
+#                 nodeDistSplit = line.split("/")
+#                 # Creating list of city nodes
+#                 if Node(nodeDistSplit[0]) not in self.nodes:
+#                     self.nodes.append(Node(nodeDistSplit[0]))
+#                 if nodeDistSplit[1] not in self.nodes:
+#                     self.nodes.append(nodeDistSplit[1])
+#                 route = Route(nodeDistSplit[0],nodeDistSplit[1],nodeDistSplit[2])
+#                 self.routes = self.routes + [route]
+#             elif "Airport" in line:
+#                 strSplit =  line.split(":")
+#                 self.dest = strSplit[1]
+#             elif "Hospital" in line:
+#                 strSplit = line.split(":")
+#                 self.src = strSplit[1]
+#         self.count =  len(self.nodes)
 
 class Node:  
     def __init__(self, data, indexloc = None):
@@ -249,3 +247,41 @@ class Graph:
                         heap.decrease_key(heap_location, data)
 
         return min_dist_list
+    
+def main():
+    parentFolderPath = ''
+    inputFileName = 'inputPS6.txt'
+#    outputFile = 'outputPS6.txt'
+    with open(parentFolderPath+inputFileName, 'r') as inpf:
+        fileText = inpf.readlines()
+              
+    nodeList = []
+    routeList = []
+    for line in fileText:
+        line = line.replace("\n","")
+        line = line.replace(" ","")
+        if "/" in line:
+#           Process line as a node
+            nodeDistSplit = line.split("/")
+            # Creating list of city nodes
+            srcNode = Node(nodeDistSplit[0])
+            if srcNode not in nodeList:
+                nodeList.append(srcNode)
+            desNode = Node(nodeDistSplit[1])
+            if desNode not in nodeList:
+                nodeList.append(desNode)
+            routeList.append(Route(srcNode, desNode, nodeDistSplit[2]))
+        elif "Airport" in line:
+            strSplit =  line.split(":")
+            self.dest = strSplit[1]
+        elif "Hospital" in line:
+            strSplit = line.split(":")
+            self.src = strSplit[1]
+    
+    g = Graph(nodeList)
+    for route in routeList:
+        g.connect(route.src, route.des, route.dist)
+
+
+if __name__=="__main__":
+    main()
