@@ -276,8 +276,8 @@ def main():
     print(start)
     print(end)
     dist = graph.dijkstra(start,end)
-    print("hospital dist" + str(dist))
-
+    print("hospital dist " + str(dist))
+    print("time " + str((dist/80)*60) )
 
 if __name__=="__main__":
     main()
