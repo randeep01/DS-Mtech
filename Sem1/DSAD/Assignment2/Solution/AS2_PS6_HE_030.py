@@ -265,7 +265,8 @@ def main():
 
     city = City(fileText)
     graph = Graph(city.count) 
-    for x in range(city.count): 
+    print("count "+ str(city.count))
+    for x in range(len(city.routes)): 
         src = ord(city.routes[x].start.strip()) - ord('a')
         dest  = ord(city.routes[x].end.strip()) - ord('a')
         weight =  int(city.routes[x].dist)
