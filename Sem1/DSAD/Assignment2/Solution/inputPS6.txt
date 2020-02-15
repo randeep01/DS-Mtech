@@ -16,6 +16,7 @@ g / h / 6
 i / k / 7
 j / k / 2
 k / m / 2
+m / o / 4
 k / o / 8
 Hospital Node: a
 Airport Node: o

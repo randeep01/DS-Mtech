@@ -133,7 +133,7 @@ class Heap():
         while i > 0 and self.array[i][1] < self.array[(i - 1) // 2][1]: 
   
             # Swap this node with its parent 
-            self.pos[ self.array[i][0] ] = (i-1)/2
+            self.pos[ self.array[i][0] ] = (i-1)//2
             self.pos[ self.array[(i-1)//2][0] ] = i 
             self.swapMinHeapNode(i, (i - 1)//2 ) 
   
@@ -149,10 +149,14 @@ class Heap():
         return False
   
   
-def printArr(dist, n): 
+def printArr(dist, n,dest): 
+    val = 0
     print("Vertex\tDistance from source")
     for i in range(n): 
         print("%d\t\t%d" % (i,dist[i]))
+        if(i==dest):
+            val = dist[i]
+    return val        
   
   
 class Graph(): 
@@ -180,7 +184,7 @@ class Graph():
     # The main function that calulates distances  
     # of shortest paths from src to all vertices.  
     # It is a O(ELogV) function 
-    def dijkstra(self, src): 
+    def dijkstra(self, src,dest): 
   
         V = self.V  # Get the number of vertices in graph 
         dist = []   # dist values used to pick minimum  
@@ -230,7 +234,7 @@ class Graph():
                         # in min heap also 
                         minHeap.decreaseKey(v, dist[v]) 
   
-        printArr(dist,V) 
+        return printArr(dist,V,dest) 
   
 
 #def preProcessInputFile(fileText):
@@ -258,35 +262,20 @@ def main():
         fileText = inpf.readlines()
 #    print(preProcessInputFile(fileText))
                 
-#    graph = Graph(preProcessInputFile(fileText)) 
-#    graph.addEdge(0, 1, 4) 
-#    graph.addEdge(0, 7, 8) 
-#    graph.addEdge(1, 2, 8) 
-#    graph.addEdge(1, 7, 11) 
-#    graph.addEdge(2, 3, 7) 
-#    graph.addEdge(2, 8, 2) 
-#    graph.addEdge(2, 5, 4) 
-#    graph.addEdge(3, 4, 9) 
-#    graph.addEdge(3, 5, 14) 
-#    graph.addEdge(4, 5, 10) 
-#    graph.addEdge(5, 6, 2) 
-#    graph.addEdge(6, 7, 1) 
-#    graph.addEdge(6, 8, 6) 
-#    graph.addEdge(7, 8, 7) 
-#    graph.dijkstra(0)
-#    print(preProcessInputFile(fileText))
-    #a,b =    preProcessInputFile(fileText)
-    city = City(fileText)
-    print(city.src)
-    print(city.dest)
-    print(city.nodes)
-    print(city.count)
-    print(city.routes)
 
+    city = City(fileText)
     graph = Graph(city.count) 
     for x in range(city.count): 
-        graph.addEdge(ord(city.routes[x].start.strip()) - ord('a'),ord(city.routes[x].end.strip()) - ord('a') , city.routes[x].dist)
-    graph.dijkstra(ord(city.src.strip()) - ord('a')) 
+        src = ord(city.routes[x].start.strip()) - ord('a')
+        dest  = ord(city.routes[x].end.strip()) - ord('a')
+        weight =  int(city.routes[x].dist)
+        graph.addEdge(src,dest ,weight)
+    start = ord(city.src.strip()) - ord('a')
+    end = ord(city.dest.strip()) - ord('a')
+    print(start)
+    print(end)
+    dist = graph.dijkstra(start,end)
+    print("hospital dist" + str(dist))
 
 
 if __name__=="__main__":

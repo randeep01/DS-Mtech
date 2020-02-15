@@ -202,8 +202,8 @@ class Graph():
   
 # Driver program to test the above functions 
 graph = Graph(9) 
-graph.addEdge('0', '1', 4) 
-graph.addEdge('0', '7', 8) 
+graph.addEdge(0, 1, 4) 
+graph.addEdge(0, 7, 8) 
 graph.addEdge(1, 2, 8) 
 graph.addEdge(1, 7, 11) 
 graph.addEdge(2, 3, 7) 
