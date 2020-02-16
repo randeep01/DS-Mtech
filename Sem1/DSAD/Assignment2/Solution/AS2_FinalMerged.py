@@ -227,7 +227,7 @@ def get_node_from_data(nodeList, data):
 
 def main():
     parentFolderPath = ''
-    inputFileName = 'inputPS6.txt'
+    inputFileName = 'inputPS61.txt'
 #    outputFile = 'outputPS6.txt'
     with open(parentFolderPath+inputFileName, 'r') as inpf:
         fileText = inpf.readlines()
@@ -271,7 +271,7 @@ def main():
     seconds = int((time - minutes)*60)
     path = str([node for node in desired_route])
     print("Shortest route from the hospital "+source.data +" to reach airport "+destination.data +" is " + path) 
-    print("and it has minimum travel distance "+str(minDist))
+    print("and it has minimum travel distance "+str(minDist) +"km")
     print("it will take ",str(minutes)+":"+str(seconds)," minutes for the ambulance to reach the airport.")
 
 if __name__=="__main__":

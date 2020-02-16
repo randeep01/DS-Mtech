@@ -1,0 +1,15 @@
+a/b/4
+a/h/8
+b/h/11
+b/c/8
+c/i/2
+i/g/6
+h/g/1
+h/i/7
+g/f/4
+c/d/7
+g/f/2
+d/e/9
+f/e/10
+Hospital Node: a
+Airport Node: e
