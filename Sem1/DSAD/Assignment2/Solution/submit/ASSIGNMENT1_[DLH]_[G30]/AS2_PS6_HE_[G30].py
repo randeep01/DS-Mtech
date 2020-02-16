@@ -289,7 +289,7 @@ def main():
     minutes = int(time)
     seconds = int((time - minutes)*60)
     path = str([node for node in desired_route])
-    output("Shortest route from the hospital "+source.data +" to reach airport "+destination.data +" is " + path)
+    output("Shortest route from the hospital \'"+source.data +"\' to reach airport \'"+destination.data +" \'is " + path)
     output("and it has minimum travel distance "+str(minDist) +"km")
     output("it will take "+str(minutes)+":"+str(seconds)+" minutes for the ambulance to reach the airport.")
    
