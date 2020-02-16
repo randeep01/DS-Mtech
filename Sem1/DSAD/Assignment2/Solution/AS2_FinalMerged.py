@@ -244,7 +244,7 @@ def output(text):
         outf.write(text+"\n") 
 def main():
     parentFolderPath = ''
-    inputFileName = 'inputPS6.txt'
+    inputFileName = 'inputPS62.txt'
     outputFile = 'outputPS6.txt'
     if os.path.isfile(parentFolderPath+outputFile):
             os.remove(parentFolderPath+outputFile)

@@ -1,0 +1,10 @@
+ a/b/5
+a/ c/ 10
+a/ e/ 2
+b/ c/2
+c/ d/7
+c / f/10
+d/ e/3
+b/ d/4
+Hospital Node: a
+Airport Node: f
